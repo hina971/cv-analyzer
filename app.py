@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_API_KEY = os.getenv("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")
 
 import json
 import os
