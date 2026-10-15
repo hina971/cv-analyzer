@@ -13,12 +13,29 @@ st.set_page_config(page_title="CV Analyzer", page_icon="📄", layout="wide")
 st.title("📄 CV Analyzer")
 st.write("Upload your resume to get an estimated ATS score and improvement suggestions.")
 
+import os
+import streamlit as st
+
 def get_api_key():
     try:
         key = st.secrets.get("GEMINI_API_KEY", "")
     except Exception:
         key = ""
-    return key or os.getenv("GEMINI_API_KEY", "")
+
+    if not key:
+        key = os.getenv("GEMINI_API_KEY", "")
+
+    return key.strip()
+
+api_key = get_api_key()
+
+if not api_key:
+    st.error(
+        "Gemini API key nahi mili. "
+        "Streamlit Settings > Secrets mein "
+        "GEMINI_API_KEY configure karein."
+    )
+    st.stop()
 
 def extract_text(file):
     raw = file.getvalue()
